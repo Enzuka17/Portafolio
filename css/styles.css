@@ -1,0 +1,879 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Dirt&family=Black+Ops+One&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+
+
+
+
+
+:root {
+  --primary-color: #ffffff;
+  --secondary-color: #ffffff;
+  --accent-color: #808080;
+  --text-color: #ffffff;
+  --bg-color: #000000;
+  --dark-navy: #0a0a0a;
+  --navy: #141414;
+  --light-navy: #1a1a1a;
+  --lightest-navy: #202020;
+  --section-padding: 80px 20px;
+  --border-rough: polygon(
+    0% 2%, 2% 0%, 98% 0%, 100% 2%,
+    100% 98%, 98% 100%, 2% 100%, 0 98%
+  );
+}
+
+/* Grungy Background Texture */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' fill='%23000000' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E"),
+    linear-gradient(
+      45deg, 
+      rgba(20,20,20,0.2) 0%, 
+      rgba(50,50,50,0.1) 25%, 
+      rgba(10,10,10,0.3) 50%, 
+      rgba(30,30,30,0.2) 75%, 
+      rgba(20,20,20,0.1) 100%
+    );
+  background-blend-mode: overlay, overlay, normal;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Crack Overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='crack' width='300' height='300' patternUnits='userSpaceOnUse'%3E%3Cpath d='M50,10 Q80,30 50,50 Q20,70 50,90 M100,30 Q130,50 100,70 Q70,90 100,110 M20,50 Q50,70 20,90 Q-10,110 20,130' stroke='rgba(255,255,255,0.05)' fill='none' stroke-width='1'/%3E%3Cpath d='M150,80 Q180,100 150,120 Q120,140 150,160 M200,60 Q230,80 200,100 Q170,120 200,140' stroke='rgba(255,255,255,0.03)' fill='none' stroke-width='1'/%3E%3C/pattern%3E%3Cfilter id='crack-noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' result='noise'/%3E%3CfeColorMatrix in='noise' type='luminanceToAlpha' result='noiseAlpha'/%3E%3CfeComposite in='noiseAlpha' in2='SourceGraphic' operator='in'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%' height='100%' fill='url(%23crack)' opacity='0.1' filter='url(%23crack-noise)'/%3E%3C/svg%3E");
+  opacity: 0.15;
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+
+body {
+  font-family: "Road Rage", serif;
+  font-size: 140%;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+/* Header & Navigation */
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  clip-path: var(--border-rough);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Black Ops One', cursive;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--primary-color);
+  padding: 5px 15px;
+  clip-path: var(--border-rough);
+  
+
+    /* Tamaño del div */
+    width: 150px;
+    height: 50px;
+
+  background-image: url('img/logo/EnzukaLogo.jpeg');
+  background-size: contain;  /* Ajusta la imagen sin recortarla */
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+nav ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: var(--primary-color);
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--section-padding);
+  background: var(--bg-color);
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  color: var(--primary-color);
+  font-family: 'Black Ops One', cursive;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  position: relative;
+  padding: 20px;
+  background: linear-gradient(145deg, transparent, rgba(255, 255, 255, 0.05));
+  clip-path: var(--border-rough);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero h2 {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-family: 'Black Ops One', cursive;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Black Ops One', cursive;
+  clip-path: var(--border-rough);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.1) 50%, transparent 55%);
+  filter: blur(1px);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.btn:hover::before {
+  transform: translateX(100%);
+}
+
+.btn.primary,
+.btn.secondary {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Sections */
+section {
+  padding: var(--section-padding);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+section h2 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--primary-color);
+  font-family: 'Black Ops One', cursive;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding: 10px 20px;
+  background: var(--light-navy);
+  clip-path: var(--border-rough);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  display: inline-block;
+  position: relative;
+}
+
+section h2::after {
+  display: none;
+}
+
+/* Projects Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.project-card {
+  background: linear-gradient(145deg, var(--light-navy), var(--navy));
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  clip-path: var(--border-rough);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='10' height='10' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.project-preview {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--lightest-navy);
+}
+
+.project-card h3 {
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: "Road Rage", serif;
+  font-size: 140%;
+}
+
+.project-card p {
+  padding: 0 1rem;
+  color: var(--text-color);
+}
+
+.project-tags {
+  padding: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.project-tags span {
+  background: var(--lightest-navy);
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+/* Skills */
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.skill-category {
+  background: linear-gradient(145deg, var(--light-navy), var(--navy));
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  clip-path: var(--border-rough);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.skill-category::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='6' height='6' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+}
+
+.skill-category h3 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  font-family: 'Black Ops One', cursive;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.skill-category ul {
+  list-style: none;
+}
+
+.skill-category li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.skill-category li::before {
+  content: "•";
+  color: var(--primary-color);
+  position: absolute;
+  left: 0;
+}
+
+/* About Section Improvements */
+.about-content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  color: var(--text-color);
+}
+
+.about-text {
+  padding-right: 2rem;
+}
+
+.about-text p {
+  color: var(--text-color);
+}
+
+.about-image {
+  position: relative;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.about-image::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  right: 15px;
+  bottom: 15px;
+  border: 3px solid var(--primary-color);
+  z-index: 1;
+  border-radius: 5px;
+  clip-path: var(--border-rough);
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  display: block;
+  clip-path: var(--border-rough);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-image::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  top: 15px;
+  left: 15px;
+  z-index: 0;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .about-text {
+    padding-right: 0;
+  }
+
+  .about-image {
+    max-width: 280px;
+    margin: 2rem auto 0;
+  }
+}
+
+/* Contact Form Improvements */
+.contact-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+  gap: 3rem;
+}
+
+.contact-form {
+  background: linear-gradient(145deg, var(--light-navy), var(--navy));
+  padding: 2rem;
+  border-radius: 5px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  clip-path: var(--border-rough);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='6' height='6' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+}
+
+.form-intro {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-family: "Road Rage", serif;
+  font-size: 140%;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--lightest-navy);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: var(--navy);
+  clip-path: var(--border-rough);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  color: var(--text-color);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+::placeholder {
+  color: #8892b0;
+}
+
+.contact-form .btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.contact-form .btn i {
+  transition: transform 0.3s ease;
+}
+
+.contact-form .btn:hover i {
+  transform: translateX(5px);
+}
+
+/* Social Links Improvements */
+.social-section {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(145deg, var(--light-navy), var(--navy));
+  border-radius: 5px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  clip-path: var(--border-rough);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='6' height='6' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+}
+
+.social-section h3 {
+  margin-bottom: 1.5rem;
+  font-family: 'Black Ops One', cursive;
+  letter-spacing: 2px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.social-links a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  padding: 1rem;
+  border-radius: 10px;
+  clip-path: var(--border-rough);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--navy);
+}
+
+.social-links a i {
+  font-size: 1.8rem;
+}
+
+.social-links a span {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.social-links a:hover {
+  transform: translateY(-5px);
+  color: var(--primary-color);
+  background: var(--lightest-navy);
+}
+
+/* Project Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(2, 12, 27, 0.9);
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.modal.active {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.modal-content {
+  background: linear-gradient(145deg, var(--light-navy), var(--dark-navy));
+  padding: 2rem;
+  border-radius: 5px;
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  margin: 2rem auto;
+  animation: modalIn 0.3s ease-out;
+  color: var(--text-color);
+  clip-path: var(--border-rough);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content h2 {
+  font-family: "Road Rage", serif;
+  font-size: 140%;
+  letter-spacing: 2px;
+}
+
+.modal-close {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--lightest-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: var(--text-color);
+}
+
+.modal-close:hover {
+  background: var(--primary-color);
+  color: var(--bg-color);
+}
+
+.modal-preview {
+  margin: 1.5rem 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.project-preview-svg {
+  width: 100%;
+  height: auto;
+  background: #f8f9fa;
+}
+
+.tech-tag {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  background: var(--lightest-navy);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  color: var(--primary-color);
+  font-family: 'Permanent Marker', cursive;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  clip-path: var(--border-rough);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--navy);
+  font-family: 'Black Ops One', cursive;
+}
+
+.project-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  text-decoration: none;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.project-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Contact Info */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.social-links a {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: var(--primary-color);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background: var(--dark-navy);
+  color: var(--text-color);
+  clip-path: var(--border-rough);
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  .contact-content {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-info {
+    text-align: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-content {
+    padding: 1rem;
+  }
+  
+  .social-links {
+    gap: 1rem;
+  }
+  
+  .social-links a {
+    padding: 0.8rem;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--light-navy);
+  border: 3px solid var(--navy);
+  border-radius: 10px;
+  clip-path: var(--border-rough);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-color);
+}
+
+::selection {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--primary-color);
+}
+
+
+
+
+
+
+.hero-visual {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  width: 100%; /* Asegúrate de que ocupe todo el ancho del contenedor */
+}
+
+.hero-visual img {
+  max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
+  height: auto;
+  width: 440px; /* Tamaño inicial */
+  border-radius: 10px; /* Bordes redondeados opcionales */
+}
+
+@media (max-width: 768px) {
+  .hero-visual img {
+    width: 100%; /* La imagen ocupará el 100% del ancho del contenedor en pantallas pequeñas */
+  }
+}
+
+
