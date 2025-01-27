@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Creación de una interfaz web intuitiva y desarrollo de una aplicación móvil para acceso remoto a la información.',
         'Aplicación de la metodología incremental con entregas parciales y mejoras continuas.'
       ],
-      link: 'https://example.com/geotren',
+      link: 'https://github.com/Piter191/Proyecto_Ferroviario',
       previewSvg: '<img src="img/imagenes_grandes/GEOTREN.png" alt="Vista previa de Tutor Seguro"/>'
     }
   };
